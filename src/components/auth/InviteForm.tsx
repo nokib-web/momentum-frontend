@@ -7,14 +7,13 @@ import { Input } from '../common/Input';
 import { Select } from '../common/Select';
 import { Button } from '../common/Button';
 import { Modal } from '../common/Modal';
-import { Card } from '../common/Card';
 import { Copy, Check } from 'lucide-react';
 import type { Role } from '../../types';
 
 const inviteSchema = z.object({
     email: z.string().email('Please enter a valid email address'),
     role: z.enum(['ADMIN', 'MANAGER', 'STAFF'], {
-        errorMap: () => ({ message: 'Please select a valid role' }),
+        message: 'Please select a valid role',
     }),
 });
 
@@ -82,36 +81,34 @@ export const InviteForm = () => {
 
     return (
         <>
-            <Card title="Invite New User">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                    {error && (
-                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
-                            {error}
-                        </div>
-                    )}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                        {error}
+                    </div>
+                )}
 
-                    <Input
-                        label="Email Address"
-                        type="email"
-                        placeholder="user@example.com"
-                        register={register('email')}
-                        error={errors.email?.message}
-                        required
-                    />
+                <Input
+                    label="Email Address"
+                    type="email"
+                    placeholder="user@example.com"
+                    register={register('email')}
+                    error={errors.email?.message}
+                    required
+                />
 
-                    <Select
-                        label="Role"
-                        options={roleOptions}
-                        register={register('role')}
-                        error={errors.role?.message}
-                        required
-                    />
+                <Select
+                    label="Role"
+                    options={roleOptions}
+                    register={register('role')}
+                    error={errors.role?.message}
+                    required
+                />
 
-                    <Button type="submit" loading={isPending} disabled={isPending}>
-                        Create Invite
-                    </Button>
-                </form>
-            </Card>
+                <Button type="submit" loading={isPending} disabled={isPending} className="w-full">
+                    Create Invite
+                </Button>
+            </form>
 
             <Modal isOpen={showModal} onClose={handleCloseModal} title="Invite Created Successfully">
                 <div className="space-y-4">
