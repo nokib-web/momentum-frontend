@@ -6,3 +6,6 @@ export * from './Table';
 export * from './Pagination';
 export * from './Modal';
 export * from './LoadingSpinner';
+export * from './Badge';
+export * from './ErrorBoundary';
+export * from './ProtectedRoute';

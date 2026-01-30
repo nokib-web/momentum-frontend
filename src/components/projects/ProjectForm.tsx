@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { Input } from '../common/Input';
 import { Select } from '../common/Select';
 import { Button } from '../common/Button';
-import type { Project, ProjectStatus } from '../../types';
+import type { Project } from '../../types';
 
 const projectSchema = z.object({
     name: z.string().min(3, 'Name must be at least 3 characters').max(100, 'Name must be less than 100 characters'),
