@@ -14,7 +14,7 @@ export const registerViaInvite = async (
     const response = await api.post<AuthResponse>('/auth/register-via-invite', {
         name,
         password,
-        inviteToken,
+        token: inviteToken, // Backend expects 'token' not 'inviteToken'
     });
     return response.data;
 };

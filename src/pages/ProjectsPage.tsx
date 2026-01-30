@@ -90,44 +90,54 @@ export const ProjectsPage = () => {
 
     return (
         <Layout>
-            <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="space-y-8 animate-in fade-in duration-500">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-100 dark:border-gray-800">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
-                        <p className="mt-2 text-sm text-gray-600">
-                            Manage and track all your projects
+                        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">Projects</h1>
+                        <p className="mt-2 text-base text-gray-500 dark:text-gray-400">
+                            Manage and track all your active initiatives.
                         </p>
                     </div>
-                    <Button onClick={() => setShowCreateModal(true)}>
-                        <Plus className="h-4 w-4 mr-2" />
-                        Create Project
-                    </Button>
-                </div>
-
-                <div className="flex items-center gap-3">
-                    <Filter className="h-5 w-5 text-gray-400" />
-                    <select
-                        value={statusFilter}
-                        onChange={(e) => {
-                            setStatusFilter(e.target.value as ProjectStatus | 'ALL');
-                            setCurrentPage(1);
-                        }}
-                        className="border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
-                    >
-                        <option value="ALL">All Projects</option>
-                        <option value="ACTIVE">Active</option>
-                        <option value="ARCHIVED">Archived</option>
-                    </select>
+                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                        <div className="relative w-full sm:w-auto">
+                            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => {
+                                    setStatusFilter(e.target.value as ProjectStatus | 'ALL');
+                                    setCurrentPage(1);
+                                }}
+                                className="w-full sm:w-auto pl-10 pr-10 py-2.5 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm font-medium transition-all cursor-pointer appearance-none"
+                            >
+                                <option value="ALL">All Status</option>
+                                <option value="ACTIVE">Active Only</option>
+                                <option value="ARCHIVED">Archived</option>
+                            </select>
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+                            </div>
+                        </div>
+                        <Button
+                            onClick={() => setShowCreateModal(true)}
+                            className="w-full sm:w-auto shadow-indigo-200 dark:shadow-none hover:shadow-lg transition-all px-6"
+                        >
+                            <Plus className="h-5 w-5 mr-2" />
+                            New Project
+                        </Button>
+                    </div>
                 </div>
 
                 {error && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
-                        Failed to load projects. Please try again.
+                    <div className="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-400 px-6 py-4 rounded-xl flex items-center gap-3">
+                        <div className="p-1 bg-red-100 dark:bg-red-900/30 rounded-full text-red-600">
+                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l18 18" /></svg>
+                        </div>
+                        <span>Failed to load projects. Please try again later.</span>
                     </div>
                 )}
 
                 {data?.projects && data.projects.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
                         {data.projects.map((project) => (
                             <ProjectCard
                                 key={project._id}
@@ -139,9 +149,13 @@ export const ProjectsPage = () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-                        <p className="text-gray-500">No projects found</p>
-                        <Button onClick={() => setShowCreateModal(true)} className="mt-4">
+                    <div className="text-center py-24 glass rounded-3xl border-dashed border-2 border-gray-200 dark:border-gray-800 animate-in zoom-in-95 duration-500">
+                        <div className="inline-flex p-6 rounded-full bg-gray-50 dark:bg-gray-900 mb-6">
+                            <Plus className="h-10 w-10 text-gray-300 dark:text-gray-700" />
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">No projects found</h3>
+                        <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-xs mx-auto">Get started by creating your first project and inviting your team.</p>
+                        <Button onClick={() => setShowCreateModal(true)} className="px-8 py-3">
                             Create Your First Project
                         </Button>
                     </div>
@@ -198,8 +212,8 @@ export const ProjectsPage = () => {
                 title="Delete Project"
             >
                 <div className="space-y-4">
-                    <p className="text-sm text-gray-600">
-                        Are you sure you want to delete <span className="font-semibold">{selectedProject?.name}</span>?
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Are you sure you want to delete <span className="font-semibold text-gray-900 dark:text-gray-100">{selectedProject?.name}</span>?
                         This action cannot be undone.
                     </p>
                     <div className="flex gap-3 justify-end">

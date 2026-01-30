@@ -18,25 +18,34 @@ export const ProjectCard = ({ project, onEdit, onDelete, isAdmin }: ProjectCardP
     };
 
     return (
-        <Card className="h-full flex flex-col">
-            <div className="flex-1">
-                <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">{project.name}</h3>
-                    <span className={`ml-2 px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap ${statusColors[project.status]}`}>
+        <Card className="h-full group flex flex-col card-hover border-opacity-50 hover:border-indigo-500/50 transition-all">
+            <div className="flex-1 p-1">
+                <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 line-clamp-2 leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                        {project.name}
+                    </h3>
+                    <span className={`ml-3 px-3 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-full shadow-sm ${statusColors[project.status].replace('100', '900/50').replace('800', '300')}`}>
+                        {project.status === 'ACTIVE' && <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse mr-1.5" />}
                         {project.status}
                     </span>
                 </div>
 
-                <p className="text-sm text-gray-600 mb-4 line-clamp-3">{project.description}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-3 leading-relaxed">
+                    {project.description}
+                </p>
 
-                <div className="space-y-2 text-sm text-gray-500">
-                    <div className="flex items-center">
-                        <User className="h-4 w-4 mr-2 flex-shrink-0" />
-                        <span className="truncate">Created by {project.createdBy.name}</span>
+                <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800/50">
+                    <div className="flex items-center text-gray-500 dark:text-gray-400">
+                        <div className="p-1.5 rounded-lg bg-gray-50 dark:bg-gray-900 mr-3">
+                            <User className="h-4 w-4" />
+                        </div>
+                        <span className="text-xs font-medium truncate">Created by <span className="text-gray-900 dark:text-gray-200">{project.createdBy.name}</span></span>
                     </div>
-                    <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
-                        <span>
+                    <div className="flex items-center text-gray-500 dark:text-gray-400">
+                        <div className="p-1.5 rounded-lg bg-gray-50 dark:bg-gray-900 mr-3">
+                            <Calendar className="h-4 w-4" />
+                        </div>
+                        <span className="text-xs font-medium">
                             {new Date(project.createdAt).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'short',
@@ -48,26 +57,26 @@ export const ProjectCard = ({ project, onEdit, onDelete, isAdmin }: ProjectCardP
             </div>
 
             {isAdmin && (onEdit || onDelete) && (
-                <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
+                <div className="flex gap-3 mt-6 pt-4 border-t border-gray-100 dark:border-gray-800/50">
                     {onEdit && (
                         <Button
                             variant="secondary"
                             size="sm"
                             onClick={() => onEdit(project)}
-                            className="flex-1"
+                            className="flex-1 !bg-transparent hover:!bg-indigo-50 dark:hover:!bg-indigo-900/30 !border-transparent hover:!border-indigo-100 dark:hover:!border-indigo-800 !text-indigo-600 dark:!text-indigo-400"
                         >
-                            <Edit className="h-4 w-4 mr-1" />
+                            <Edit className="h-4 w-4 mr-1.5" />
                             Edit
                         </Button>
                     )}
                     {onDelete && (
                         <Button
-                            variant="danger"
+                            variant="secondary"
                             size="sm"
                             onClick={() => onDelete(project)}
-                            className="flex-1"
+                            className="flex-1 !bg-transparent hover:!bg-red-50 dark:hover:!bg-red-900/30 !border-transparent hover:!border-red-100 dark:hover:!border-red-800 !text-red-600 dark:!text-red-400"
                         >
-                            <Trash2 className="h-4 w-4 mr-1" />
+                            <Trash2 className="h-4 w-4 mr-1.5" />
                             Delete
                         </Button>
                     )}

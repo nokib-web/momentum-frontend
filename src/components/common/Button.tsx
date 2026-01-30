@@ -26,7 +26,7 @@ export const Button = ({
 
     const variants = {
         primary: 'text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500',
-        secondary: 'text-gray-700 bg-white border-gray-300 hover:bg-gray-50 focus:ring-indigo-500',
+        secondary: 'text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 focus:ring-indigo-500',
         danger: 'text-white bg-red-600 hover:bg-red-700 focus:ring-red-500',
     };
 

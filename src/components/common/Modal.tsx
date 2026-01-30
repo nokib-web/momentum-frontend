@@ -36,15 +36,15 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
             ></div>
 
             {/* Modal Content */}
-            <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="flex items-center justify-between border-b border-gray-200 pb-3 mb-4">
-                        <h3 className="text-lg font-semibold leading-6 text-gray-900" id="modal-title">
+            <div className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div className="bg-white dark:bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+                        <h3 className="text-lg font-semibold leading-6 text-gray-900 dark:text-gray-100" id="modal-title">
                             {title}
                         </h3>
                         <button
                             onClick={onClose}
-                            className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
+                            className="rounded-md bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 focus:outline-none"
                         >
                             <span className="sr-only">Close</span>
                             <X className="h-6 w-6" aria-hidden="true" />

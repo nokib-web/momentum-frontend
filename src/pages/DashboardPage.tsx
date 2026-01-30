@@ -61,15 +61,15 @@ export const DashboardPage = () => {
                         <div className="flex items-center">
                             <div className="flex-shrink-0">
                                 <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                                    <FolderKanban className="h-6 w-6 text-indigo-600" />
+                                    <FolderKanban className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
                                 </div>
                             </div>
                             <div className="ml-4">
-                                <p className="text-sm font-medium text-gray-500">Total Projects</p>
+                                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Projects</p>
                                 {isLoading ? (
                                     <LoadingSpinner size="sm" />
                                 ) : (
-                                    <p className="text-2xl font-bold text-gray-900">{projectsData?.pagination.total || 0}</p>
+                                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{projectsData?.pagination.total || 0}</p>
                                 )}
                             </div>
                         </div>
@@ -79,15 +79,15 @@ export const DashboardPage = () => {
                         <div className="flex items-center">
                             <div className="flex-shrink-0">
                                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                                    <Briefcase className="h-6 w-6 text-green-600" />
+                                    <Briefcase className="h-6 w-6 text-green-600 dark:text-green-400" />
                                 </div>
                             </div>
                             <div className="ml-4">
-                                <p className="text-sm font-medium text-gray-500">Active Projects</p>
+                                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Projects</p>
                                 {isLoading ? (
                                     <LoadingSpinner size="sm" />
                                 ) : (
-                                    <p className="text-2xl font-bold text-gray-900">
+                                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                                         {projectsData?.projects?.filter(p => p.status === 'ACTIVE').length || 0}
                                     </p>
                                 )}
@@ -99,12 +99,12 @@ export const DashboardPage = () => {
                         <div className="flex items-center">
                             <div className="flex-shrink-0">
                                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                                    <Users className="h-6 w-6 text-purple-600" />
+                                    <Users className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                                 </div>
                             </div>
                             <div className="ml-4">
-                                <p className="text-sm font-medium text-gray-500">Your Role</p>
-                                <p className="text-2xl font-bold text-gray-900">{user?.role}</p>
+                                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Your Role</p>
+                                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{user?.role}</p>
                             </div>
                         </div>
                     </Card>
@@ -112,7 +112,7 @@ export const DashboardPage = () => {
 
                 {/* Quick Actions */}
                 <div>
-                    <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Quick Actions</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {quickActions.filter(action => action.show).map((action) => {
                             const Icon = action.icon;
@@ -120,12 +120,12 @@ export const DashboardPage = () => {
                                 <Link key={action.link} to={action.link}>
                                     <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
                                         <div className="flex items-start">
-                                            <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${action.color}`}>
+                                            <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${action.color.replace('50', '900/50')}`}>
                                                 <Icon className="h-5 w-5" />
                                             </div>
                                             <div className="ml-4 flex-1">
-                                                <h3 className="text-lg font-semibold text-gray-900 mb-1">{action.title}</h3>
-                                                <p className="text-sm text-gray-600">{action.description}</p>
+                                                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">{action.title}</h3>
+                                                <p className="text-sm text-gray-600 dark:text-gray-400">{action.description}</p>
                                             </div>
                                             <ArrowRight className="h-5 w-5 text-gray-400 flex-shrink-0" />
                                         </div>
@@ -139,7 +139,7 @@ export const DashboardPage = () => {
                 {/* Recent Projects */}
                 <div>
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-bold text-gray-900">Recent Projects</h2>
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Recent Projects</h2>
                         <Link to="/projects">
                             <Button variant="secondary" size="sm">
                                 View All
@@ -154,18 +154,18 @@ export const DashboardPage = () => {
                         </div>
                     ) : projectsData?.projects && projectsData.projects.length > 0 ? (
                         <Card>
-                            <div className="divide-y divide-gray-200">
+                            <div className="divide-y divide-gray-200 dark:divide-gray-700">
                                 {projectsData.projects.slice(0, 5).map((project) => (
                                     <div key={project._id} className="py-4 first:pt-0 last:pb-0">
                                         <div className="flex items-center justify-between">
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="text-sm font-medium text-gray-900 truncate">{project.name}</h3>
-                                                <p className="text-sm text-gray-500 truncate">{project.description}</p>
+                                                <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{project.name}</h3>
+                                                <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{project.description}</p>
                                             </div>
                                             <div className="ml-4 flex-shrink-0">
                                                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${project.status === 'ACTIVE' ? 'bg-green-100 text-green-800' :
-                                                        project.status === 'ARCHIVED' ? 'bg-yellow-100 text-yellow-800' :
-                                                            'bg-red-100 text-red-800'
+                                                    project.status === 'ARCHIVED' ? 'bg-yellow-100 text-yellow-800' :
+                                                        'bg-red-100 text-red-800'
                                                     }`}>
                                                     {project.status}
                                                 </span>

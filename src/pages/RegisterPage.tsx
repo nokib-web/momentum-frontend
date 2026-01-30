@@ -59,8 +59,9 @@ export const RegisterPage = () => {
             const response = await registerViaInvite(data.name, data.password, inviteToken);
             authLogin(response);
             navigate('/dashboard');
-        } catch (err: any) {
-            setError(err.message || 'Registration failed. Please try again or contact your administrator.');
+        } catch (err: unknown) {
+            const error = err as { message?: string };
+            setError(error.message || 'Registration failed. Please try again or contact your administrator.');
         } finally {
             setIsLoading(false);
         }

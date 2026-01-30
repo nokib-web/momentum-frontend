@@ -21,6 +21,7 @@ export const Header = () => {
         { name: 'Dashboard', path: '/dashboard', roles: ['ADMIN', 'MANAGER', 'STAFF'] },
         { name: 'Projects', path: '/projects', roles: ['ADMIN', 'MANAGER', 'STAFF'] },
         { name: 'Users', path: '/users', roles: ['ADMIN'] },
+        { name: 'Settings', path: '/settings', roles: ['ADMIN', 'MANAGER', 'STAFF'] },
     ];
 
     const filteredLinks = navLinks.filter(
@@ -32,8 +33,14 @@ export const Header = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     <div className="flex items-center">
-                        <Link to="/" className="flex-shrink-0 flex items-center">
-                            <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">Momentum</span>
+                        <Link to="/" className="flex-shrink-0 flex items-center group">
+                            <div className="relative h-9 w-9 flex items-center justify-center bg-indigo-600 rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none mr-3 transform group-hover:rotate-12 transition-all duration-300">
+                                <span className="text-white font-black text-xl">M</span>
+                                <div className="absolute -top-1 -right-1 w-3 h-3 bg-cyan-400 rounded-full border-2 border-white dark:border-gray-800"></div>
+                            </div>
+                            <span className="text-2xl font-black tracking-tight text-gray-900 dark:text-gray-100 italic">
+                                MOMEN<span className="text-indigo-600 dark:text-indigo-400">TUM</span>
+                            </span>
                         </Link>
                         <nav className="hidden md:ml-8 md:flex md:space-x-4">
                             {filteredLinks.map((link) => (
@@ -98,27 +105,53 @@ export const Header = () => {
 
             {/* Mobile menu */}
             {isMobileMenuOpen && (
-                <div className="md:hidden bg-white border-b border-gray-200">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        {filteredLinks.map((link) => (
-                            <Link
-                                key={link.path}
-                                to={link.path}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className={`block px-3 py-2 rounded-md text-base font-medium ${location.pathname.startsWith(link.path)
-                                    ? 'bg-indigo-50 text-indigo-700'
-                                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                                    }`}
+                <div className="md:hidden glass border-b border-gray-200 dark:border-gray-700 animate-in slide-in-from-top duration-300">
+                    <div className="px-4 pt-4 pb-6 space-y-4">
+                        {isAuthenticated && user && (
+                            <div className="flex items-center space-x-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+                                <div className="h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
+                                    <UserIcon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">{user.name}</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">{user.role}</p>
+                                </div>
+                            </div>
+                        )}
+                        <div className="space-y-1">
+                            {filteredLinks.map((link) => (
+                                <Link
+                                    key={link.path}
+                                    to={link.path}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className={`block px-3 py-2.5 rounded-lg text-base font-medium transition-colors ${location.pathname.startsWith(link.path)
+                                        ? 'bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300'
+                                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100'
+                                        }`}
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
+                        </div>
+                        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
+                            <button
+                                onClick={toggleTheme}
+                                className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 font-medium"
                             >
-                                {link.name}
-                            </Link>
-                        ))}
-                        <button
-                            onClick={handleLogout}
-                            className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50"
-                        >
-                            Logout
-                        </button>
+                                {theme === 'dark' ? (
+                                    <><Sun className="h-5 w-5" /> <span>Light Mode</span></>
+                                ) : (
+                                    <><Moon className="h-5 w-5" /> <span>Dark Mode</span></>
+                                )}
+                            </button>
+                            <button
+                                onClick={handleLogout}
+                                className="flex items-center space-x-2 text-red-600 font-medium"
+                            >
+                                <LogOut className="h-5 w-5" />
+                                <span>Logout</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

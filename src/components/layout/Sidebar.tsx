@@ -18,9 +18,9 @@ export const Sidebar = () => {
     );
 
     return (
-        <aside className="hidden md:flex flex-col w-64 bg-white border-r border-gray-200">
-            <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                <nav className="mt-5 flex-1 px-2 space-y-1">
+        <aside className="hidden lg:flex flex-col w-72 glass border-r border-gray-100 dark:border-gray-800 transition-all duration-300">
+            <div className="flex-1 flex flex-col pt-8 pb-4 overflow-y-auto px-4">
+                <nav className="space-y-2">
                     {filteredItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = location.pathname.startsWith(item.path);
@@ -28,13 +28,13 @@ export const Sidebar = () => {
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors ${isActive
-                                        ? 'bg-indigo-50 text-indigo-700'
-                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                className={`group flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 ${isActive
+                                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100 dark:shadow-none'
+                                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-indigo-600 dark:hover:text-indigo-400'
                                     }`}
                             >
                                 <Icon
-                                    className={`mr-3 flex-shrink-0 h-5 w-5 ${isActive ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-500'
+                                    className={`mr-3 flex-shrink-0 h-5 w-5 transition-colors ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400'
                                         }`}
                                 />
                                 {item.name}
@@ -42,6 +42,12 @@ export const Sidebar = () => {
                         );
                     })}
                 </nav>
+            </div>
+            <div className="p-4 border-t border-gray-100 dark:border-gray-800">
+                <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl p-4">
+                    <p className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Momentum Pro</p>
+                    <p className="text-[10px] text-indigo-500/80 dark:text-indigo-400/60 leading-tight">Managing your projects with precision and speed.</p>
+                </div>
             </div>
         </aside>
     );

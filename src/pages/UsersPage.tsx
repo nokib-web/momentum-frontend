@@ -35,13 +35,13 @@ export const UsersPage = () => {
         {
             header: 'Name',
             accessor: (user: User) => (
-                <div className="font-medium text-gray-900">{user.name}</div>
+                <div className="font-medium text-gray-900 dark:text-gray-100">{user.name}</div>
             ),
         },
         {
             header: 'Email',
             accessor: (user: User) => (
-                <div className="text-gray-500">{user.email}</div>
+                <div className="text-gray-500 dark:text-gray-400">{user.email}</div>
             ),
         },
         {
@@ -51,7 +51,7 @@ export const UsersPage = () => {
                     value={user.role}
                     onChange={(e) => handleRoleChange(user._id, e.target.value as Role)}
                     disabled={updateRoleMutation.isPending}
-                    className="text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <option value="STAFF">Staff</option>
                     <option value="MANAGER">Manager</option>
@@ -66,7 +66,7 @@ export const UsersPage = () => {
                     value={user.status}
                     onChange={(e) => handleStatusChange(user._id, e.target.value as UserStatus)}
                     disabled={updateStatusMutation.isPending}
-                    className={`text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed ${user.status === 'ACTIVE' ? 'text-green-700' : 'text-red-700'
+                    className={`text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed ${user.status === 'ACTIVE' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'
                         }`}
                 >
                     <option value="ACTIVE">Active</option>
@@ -77,7 +77,7 @@ export const UsersPage = () => {
         {
             header: 'Created At',
             accessor: (user: User) => (
-                <div className="text-gray-500 text-sm">
+                <div className="text-gray-500 dark:text-gray-400 text-sm">
                     {new Date(user.createdAt).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'short',
@@ -103,8 +103,8 @@ export const UsersPage = () => {
             <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
-                        <p className="mt-2 text-sm text-gray-600">
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">User Management</h1>
+                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                             Manage user accounts, roles, and permissions
                         </p>
                     </div>
@@ -115,7 +115,7 @@ export const UsersPage = () => {
                 </div>
 
                 {error && (
-                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
+                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-md">
                         Failed to load users. Please try again.
                     </div>
                 )}
