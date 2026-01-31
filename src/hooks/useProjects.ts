@@ -3,12 +3,12 @@ import { getProjects, createProject, updateProject, deleteProject } from '../api
 import { useAuth } from './useAuth';
 import type { ProjectStatus, Project } from '../types';
 
-export const useProjects = (page = 1, limit = 10, status?: ProjectStatus) => {
+export const useProjects = (page = 1, limit = 10, status?: ProjectStatus, search?: string) => {
     const { isAuthenticated } = useAuth();
 
     return useQuery({
-        queryKey: ['projects', page, limit, status],
-        queryFn: () => getProjects(page, limit, status),
+        queryKey: ['projects', page, limit, status, search],
+        queryFn: () => getProjects(page, limit, status, search),
         enabled: isAuthenticated,
     });
 };

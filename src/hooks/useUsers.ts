@@ -3,12 +3,12 @@ import { getUsers, updateUserRole, updateUserStatus } from '../api/users';
 import { useAuth } from './useAuth';
 import type { Role, UserStatus } from '../types';
 
-export const useUsers = (page = 1, limit = 10) => {
+export const useUsers = (page = 1, limit = 10, search?: string) => {
     const { isAuthenticated } = useAuth();
 
     return useQuery({
-        queryKey: ['users', page, limit],
-        queryFn: () => getUsers(page, limit),
+        queryKey: ['users', page, limit, search],
+        queryFn: () => getUsers(page, limit, search),
         enabled: isAuthenticated,
     });
 };

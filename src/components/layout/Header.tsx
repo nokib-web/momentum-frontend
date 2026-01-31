@@ -2,7 +2,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../context/ThemeContext';
 import { Button } from '../common/Button';
-import { LogOut, Menu, User as UserIcon, Moon, Sun } from 'lucide-react';
+import { Modal } from '../common/Modal';
+import { LogOut, Menu, User as UserIcon, Moon, Sun, AlertTriangle } from 'lucide-react';
 import { useState } from 'react';
 
 export const Header = () => {
@@ -11,8 +12,14 @@ export const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
-    const handleLogout = () => {
+    const handleLogoutClick = () => {
+        setShowLogoutConfirm(true);
+        setIsMobileMenuOpen(false);
+    };
+
+    const confirmLogout = () => {
         logout();
         navigate('/login');
     };
@@ -84,7 +91,7 @@ export const Header = () => {
                         <Button
                             variant="secondary"
                             size="sm"
-                            onClick={handleLogout}
+                            onClick={handleLogoutClick}
                             className="!py-1.5"
                         >
                             <LogOut className="h-4 w-4 mr-2" />
@@ -145,7 +152,7 @@ export const Header = () => {
                                 )}
                             </button>
                             <button
-                                onClick={handleLogout}
+                                onClick={handleLogoutClick}
                                 className="flex items-center space-x-2 text-red-600 font-medium"
                             >
                                 <LogOut className="h-5 w-5" />
@@ -155,6 +162,42 @@ export const Header = () => {
                     </div>
                 </div>
             )}
+            {/* Logout Confirmation Modal */}
+            <Modal
+                isOpen={showLogoutConfirm}
+                onClose={() => setShowLogoutConfirm(false)}
+                title="Confirm Logout"
+            >
+                <div className="space-y-6">
+                    <div className="flex items-center gap-4 p-4 bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30">
+                        <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-red-100 dark:bg-red-900/40 rounded-xl text-red-600 dark:text-red-400">
+                            <AlertTriangle className="h-6 w-6" />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100">Are you sure you want to logout?</h3>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">You will need to login again to access your dashboard.</p>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                        <Button
+                            variant="secondary"
+                            className="flex-1"
+                            onClick={() => setShowLogoutConfirm(false)}
+                        >
+                            Stay Logged In
+                        </Button>
+                        <Button
+                            variant="danger"
+                            className="flex-1"
+                            onClick={confirmLogout}
+                        >
+                            <LogOut className="h-4 w-4 mr-2" />
+                            Logout Now
+                        </Button>
+                    </div>
+                </div>
+            </Modal>
         </header>
     );
 };

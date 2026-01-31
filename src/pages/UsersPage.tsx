@@ -9,7 +9,8 @@ import { Pagination } from '../components/common/Pagination';
 import { Modal } from '../components/common/Modal';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { InviteForm } from '../components/auth/InviteForm';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Search } from 'lucide-react';
+import { useDebounce } from '../hooks/useDebounce';
 import type { User, Role, UserStatus } from '../types';
 
 export const UsersPage = () => {
@@ -17,9 +18,11 @@ export const UsersPage = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [showInviteModal, setShowInviteModal] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const debouncedSearch = useDebounce(searchQuery, 500);
     const limit = 10;
 
-    const { data, isLoading, error } = useUsers(currentPage, limit);
+    const { data, isLoading, error } = useUsers(currentPage, limit, debouncedSearch);
     const updateRoleMutation = useUpdateUserRole();
     const updateStatusMutation = useUpdateUserStatus();
 
@@ -108,10 +111,25 @@ export const UsersPage = () => {
                             Manage user accounts, roles, and permissions
                         </p>
                     </div>
-                    <Button onClick={() => setShowInviteModal(true)}>
-                        <UserPlus className="h-4 w-4 mr-2" />
-                        Invite New User
-                    </Button>
+                    <div className="flex flex-col sm:flex-row items-center gap-4 flex-1 max-w-md">
+                        <div className="relative w-full">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                            <input
+                                type="text"
+                                placeholder="Search by name or email..."
+                                value={searchQuery}
+                                onChange={(e) => {
+                                    setSearchQuery(e.target.value);
+                                    setCurrentPage(1);
+                                }}
+                                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm font-medium transition-all"
+                            />
+                        </div>
+                        <Button onClick={() => setShowInviteModal(true)} className="w-full sm:w-auto">
+                            <UserPlus className="h-4 w-4 mr-2" />
+                            Invite New User
+                        </Button>
+                    </div>
                 </div>
 
                 {error && (

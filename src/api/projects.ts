@@ -4,10 +4,11 @@ import type { Project, ProjectStatus, PaginatedResponse } from '../types';
 export const getProjects = async (
     page = 1,
     limit = 10,
-    status?: ProjectStatus
+    status?: ProjectStatus,
+    search?: string
 ): Promise<PaginatedResponse<Project[]>> => {
     const response = await api.get<PaginatedResponse<Project[]>>('/projects', {
-        params: { page, limit, status },
+        params: { page, limit, status, search },
     });
     return response.data;
 };

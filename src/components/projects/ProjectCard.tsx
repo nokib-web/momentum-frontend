@@ -20,14 +20,17 @@ export const ProjectCard = ({ project, onEdit, onDelete, isAdmin }: ProjectCardP
     return (
         <Card className="h-full group flex flex-col card-hover border-opacity-50 hover:border-indigo-500/50 transition-all">
             <div className="flex-1 p-1">
-                <div className="flex items-start justify-between mb-4">
+                <div className="mb-4">
+                    <div className="flex items-center justify-between mb-3">
+                        <span className={`px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-lg shadow-sm ${statusColors[project.status].replace('100', '900/50').replace('800', '300')}`}>
+                            {project.status === 'ACTIVE' && <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse mr-1.5 align-middle" />}
+                            <span className="align-middle">{project.status}</span>
+                        </span>
+                        {/* Optional: Add an icon or other metadata here if needed */}
+                    </div>
                     <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 line-clamp-2 leading-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                         {project.name}
                     </h3>
-                    <span className={`ml-3 px-3 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-full shadow-sm ${statusColors[project.status].replace('100', '900/50').replace('800', '300')}`}>
-                        {project.status === 'ACTIVE' && <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse mr-1.5" />}
-                        {project.status}
-                    </span>
                 </div>
 
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-3 leading-relaxed">

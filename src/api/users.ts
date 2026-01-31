@@ -1,9 +1,13 @@
 import api from '../lib/axios';
 import type { User, Role, UserStatus, PaginatedResponse } from '../types';
 
-export const getUsers = async (page = 1, limit = 10): Promise<PaginatedResponse<User[]>> => {
+export const getUsers = async (
+    page = 1,
+    limit = 10,
+    search?: string
+): Promise<PaginatedResponse<User[]>> => {
     const response = await api.get<PaginatedResponse<User[]>>('/users', {
-        params: { page, limit },
+        params: { page, limit, search },
     });
     return response.data;
 };

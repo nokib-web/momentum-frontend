@@ -14,7 +14,8 @@ import { Pagination } from '../components/common/Pagination';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { ProjectCard } from '../components/projects/ProjectCard';
 import { ProjectForm } from '../components/projects/ProjectForm';
-import { Plus, Filter } from 'lucide-react';
+import { Plus, Filter, Search } from 'lucide-react';
+import { useDebounce } from '../hooks/useDebounce';
 import type { Project, ProjectStatus } from '../types';
 
 export const ProjectsPage = () => {
@@ -24,6 +25,8 @@ export const ProjectsPage = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [statusFilter, setStatusFilter] = useState<ProjectStatus | 'ALL'>('ALL');
+    const [searchQuery, setSearchQuery] = useState('');
+    const debouncedSearch = useDebounce(searchQuery, 500);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -32,7 +35,7 @@ export const ProjectsPage = () => {
     const limit = 12;
     const filterStatus = statusFilter === 'ALL' ? undefined : statusFilter;
 
-    const { data, isLoading, error } = useProjects(currentPage, limit, filterStatus);
+    const { data, isLoading, error } = useProjects(currentPage, limit, filterStatus, debouncedSearch);
     const createMutation = useCreateProject();
     const updateMutation = useUpdateProject();
     const deleteMutation = useDeleteProject();
@@ -98,7 +101,20 @@ export const ProjectsPage = () => {
                             Manage and track all your active initiatives.
                         </p>
                     </div>
-                    <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <div className="flex flex-col sm:flex-row items-center gap-4 flex-1 max-w-2xl">
+                        <div className="relative w-full">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                            <input
+                                type="text"
+                                placeholder="Search by name or description..."
+                                value={searchQuery}
+                                onChange={(e) => {
+                                    setSearchQuery(e.target.value);
+                                    setCurrentPage(1);
+                                }}
+                                className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm font-medium transition-all"
+                            />
+                        </div>
                         <div className="relative w-full sm:w-auto">
                             <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                             <select
