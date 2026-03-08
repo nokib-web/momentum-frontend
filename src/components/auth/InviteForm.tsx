@@ -8,7 +8,7 @@ import { Select } from '../common/Select';
 import { Button } from '../common/Button';
 import { Modal } from '../common/Modal';
 import { Copy, Check } from 'lucide-react';
-import type { Role } from '../../types';
+import type { Role, ApiError } from '../../types';
 
 const inviteSchema = z.object({
     email: z.string().email('Please enter a valid email address'),
@@ -57,7 +57,7 @@ export const InviteForm = () => {
                     setShowModal(true);
                     reset();
                 },
-                onError: (err: any) => {
+                onError: (err: ApiError) => {
                     setError(err.message || 'Failed to create invite. Please try again.');
                 },
             }
